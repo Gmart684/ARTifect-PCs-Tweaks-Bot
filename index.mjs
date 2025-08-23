@@ -97,14 +97,16 @@ client.once('clientReady', async () => {
       return;
     }
 
-    const pins = await channel.messages.fetchPins();
-    const exists = pins.some(m => m.content?.includes(REFERENCE_MARKER));
+    const pinsCollection = await channel.messages.fetchPins();
+    const pinsArray = Array.from(pinsCollection?.values?.() ?? []);
+    const exists = pinsArray.some((m) => m?.content?.includes(REFERENCE_MARKER));
+
     if (!exists) {
       const msg = await channel.send(COMMAND_REFERENCE);
       await msg.pin();
       console.log('📌 Posted and pinned command reference.');
     } else {
-      console.log('📌 Command reference already pinned; skipping. Total pins:', pins.size);
+      console.log('📌 Command reference already pinned; skipping. Total pins:', pinsArray.length);
     }
   } catch (e) {
     console.error('Error ensuring pinned reference:', e);
