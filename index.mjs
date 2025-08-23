@@ -99,35 +99,56 @@ async function registerSlashCommands() {
   }
 }
 
+// ===== Helpers: normalize pins to an array (v14/v15 safe) =====
+function toArrayMaybeCollection(obj) {
+  if (!obj) return [];
+  if (Array.isArray(obj)) return obj;
+  if (typeof obj.values === 'function') return Array.from(obj.values());
+  if (typeof obj[Symbol.iterator] === 'function') return Array.from(obj);
+  return [];
+}
+
 // ===== Ensure a message with marker exists & pinned (idempotent) =====
 async function ensurePinnedWithMarker(channel, content, marker) {
-  // Check current pins
-  const pins = await channel.messages.fetchPins().catch(() => null);
-  if (pins) {
-    for (const msg of pins.values()) {
-      if (msg?.content?.includes(marker)) return false; // already pinned
-    }
+  // 1) Check current pins
+  let pins;
+  try {
+    // v14: fetchPinned() (deprecated), v15: fetchPins()
+    pins = (channel.messages.fetchPins ? await channel.messages.fetchPins() : await channel.messages.fetchPinned());
+  } catch {
+    try {
+      pins = await channel.messages.fetchPinned();
+    } catch {}
   }
-  // Check recent messages (in case posted but unpinned)
-  const recent = await channel.messages.fetch({ limit: 50 }).catch(() => null);
-  if (recent) {
-    for (const msg of recent.values()) {
-      if (msg?.content?.includes(marker)) {
-        await msg.pin().catch(() => {});
-        console.log(`📌 Found existing marker (${marker}); pinned it.`);
-        return false;
-      }
-    }
+  const pinsArr = toArrayMaybeCollection(pins);
+  if (pinsArr.some((m) => m?.content?.includes(marker))) return false; // already pinned
+
+  // 2) Check recent messages (in case posted but unpinned)
+  let recent = [];
+  try {
+    const r = await channel.messages.fetch({ limit: 50 });
+    recent = toArrayMaybeCollection(r);
+  } catch {}
+  const existing = recent.find((m) => m?.content?.includes(marker));
+  if (existing) {
+    await existing.pin().catch(() => {});
+    console.log(`📌 Found existing marker (${marker}); pinned it.`);
+    return false;
   }
-  // Post fresh and pin
+
+  // 3) Post fresh and pin
   const posted = await channel.send(content);
   await posted.pin().catch(() => {});
   console.log(`📌 Posted and pinned marker (${marker}).`);
   return true; // newly posted
 }
 
-// ===== Unified startup =====
+// ===== Unified startup with single-run guard =====
+let started = false;
 async function startup() {
+  if (started) return;
+  started = true;
+
   console.log(`✅ Logged in as ${client.user.tag}`);
   await registerSlashCommands();
 
@@ -154,7 +175,7 @@ async function startup() {
   }
 }
 
-// Support both v14 and v15 event names:
+// Support both v14 and v15 events (guard prevents double run)
 client.once('ready', startup);
 client.once('clientReady', startup);
 
@@ -168,7 +189,7 @@ client.on('interactionCreate', async (interaction) => {
   // Defer immediately (ephemeral via flags)
   try {
     await interaction.deferReply({ flags: 64 }); // 64 = EPHEMERAL
-  } catch (_) {}
+  } catch {}
 
   try {
     const targetChannel = await client.channels.fetch(CHANNEL_ID);
