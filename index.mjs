@@ -1,10 +1,12 @@
 import fs from 'node:fs';
+import path from 'node:path';
 import {
   Client,
   GatewayIntentBits,
   ChannelType,
   EmbedBuilder,
-  PermissionFlagsBits
+  REST,
+  Routes
 } from 'discord.js';
 
 // Load dataset
@@ -13,7 +15,7 @@ const data = JSON.parse(fs.readFileSync('./data.json', 'utf-8'));
 // Env vars from Railway
 const TOKEN = process.env.DISCORD_TOKEN;
 const APP_ID = process.env.DISCORD_APP_ID;
-const GUILD_ID = process.env.GUILD_ID;           // optional (used by register script)
+const GUILD_ID = process.env.GUILD_ID;           // optional (instant guild registration if set)
 const CHANNEL_ID = process.env.CHANNEL_ID;       // REQUIRED: target text channel for posts/threads
 
 if (!TOKEN || !APP_ID || !CHANNEL_ID) {
@@ -54,8 +56,40 @@ function makeEmbed(item) {
     .setColor(0x00ffff);
 }
 
-client.on('ready', async () => {
+// Auto-register slash commands on boot
+async function registerSlashCommands() {
+  try {
+    const commandsPath = path.join(process.cwd(), 'commands.json');
+    const commands = JSON.parse(fs.readFileSync(commandsPath, 'utf-8'));
+
+    const rest = new REST({ version: '10' }).setToken(TOKEN);
+
+    if (GUILD_ID) {
+      await rest.put(
+        Routes.applicationGuildCommands(APP_ID, GUILD_ID),
+        { body: commands }
+      );
+      console.log('✅ Slash commands registered (guild).');
+    } else {
+      await rest.put(
+        Routes.applicationCommands(APP_ID),
+        { body: commands }
+      );
+      console.log('✅ Slash commands registered (global).');
+    }
+  } catch (err) {
+    console.error('Slash command registration failed:', err);
+  }
+}
+
+// v15-ready event name
+client.once('clientReady', async () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
+
+  // Auto-register on boot
+  await registerSlashCommands();
+
+  // Ensure the pinned command deck exists
   try {
     const channel = await client.channels.fetch(CHANNEL_ID);
     if (!channel?.isTextBased()) {
@@ -63,15 +97,14 @@ client.on('ready', async () => {
       return;
     }
 
-    // Check pinned for the command reference marker
-    const pins = await channel.messages.fetchPinned();
-    const exists = pins.some(m => m.content.includes(REFERENCE_MARKER));
+    const pins = await channel.messages.fetchPins();
+    const exists = pins.some(m => m.content?.includes(REFERENCE_MARKER));
     if (!exists) {
       const msg = await channel.send(COMMAND_REFERENCE);
       await msg.pin();
       console.log('📌 Posted and pinned command reference.');
     } else {
-      console.log('📌 Command reference already pinned; skipping.');
+      console.log('📌 Command reference already pinned; skipping. Total pins:', pins.size);
     }
   } catch (e) {
     console.error('Error ensuring pinned reference:', e);
@@ -82,7 +115,10 @@ client.on('interactionCreate', async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
 
   const cmd = `/${interaction.commandName}`;
-  if (!data[cmd]) return; // ignore unknown commands (not ours)
+  if (!data[cmd]) {
+    // Not one of our commands; ignore silently
+    return;
+  }
 
   try {
     const targetChannel = await client.channels.fetch(CHANNEL_ID);
@@ -91,7 +127,6 @@ client.on('interactionCreate', async (interaction) => {
       return;
     }
 
-    // If command is used outside the designated channel, still handle it but create the thread in the designated one.
     const thread = await targetChannel.threads.create({
       name: `${interaction.user.username}-${interaction.commandName}`,
       autoArchiveDuration: 60,
@@ -101,17 +136,16 @@ client.on('interactionCreate', async (interaction) => {
     const warningMsg = await thread.send(WARNING);
     await warningMsg.pin();
 
-    // Send embeds one by one (could batch if preferred)
     for (const item of data[cmd]) {
       await thread.send({ embeds: [makeEmbed(item)] });
     }
 
-    // Acknowledge to user (ephemeral) and link thread
     await interaction.reply({ content: `🔒 Private thread created in <#${CHANNEL_ID}>: ${thread}`, ephemeral: true });
   } catch (err) {
     console.error(err);
-    if (interaction.replied || interaction.deferred) return;
-    await interaction.reply({ content: '❌ Something went wrong creating your thread.', ephemeral: true });
+    if (!interaction.replied && !interaction.deferred) {
+      await interaction.reply({ content: '❌ Something went wrong creating your thread.', ephemeral: true });
+    }
   }
 });
 
