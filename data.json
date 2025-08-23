@@ -1,0 +1,471 @@
+{
+  "/debloat": [
+    {
+      "name": "Chris Titus Tech Windows Utility (WinUtil)",
+      "url": "https://github.com/ChrisTitusTech/winutil",
+      "blurb": "Swiss-army knife for Windows \u2014 debloat, tweak, and kit out your OS in one shot."
+    },
+    {
+      "name": "Sophia Script for Windows",
+      "url": "https://github.com/farag2/Sophia-Script-for-Windows",
+      "blurb": "The power user\u2019s debloater \u2014 fully scriptable, precision control over every tweak."
+    },
+    {
+      "name": "O&O AppBuster",
+      "url": "https://www.oo-software.com/en/ooappbuster",
+      "blurb": "Click-and-zap Windows apps you never wanted in the first place."
+    },
+    {
+      "name": "O&O ShutUp10++",
+      "url": "https://www.oo-software.com/en/shutup10",
+      "blurb": "One-click privacy lockdown for Windows telemetry and tracking."
+    },
+    {
+      "name": "Bloatbox",
+      "url": "https://github.com/builtbybel/bloatbox",
+      "blurb": "Lightweight, open-source, no-nonsense bloatware terminator."
+    },
+    {
+      "name": "Privatezilla",
+      "url": "https://github.com/builtbybel/privatezilla",
+      "blurb": "Minimalist privacy control panel that nukes Windows\u2019 bad habits."
+    },
+    {
+      "name": "Windows10Debloater (Sycnex)",
+      "url": "https://github.com/Sycnex/Windows10Debloater",
+      "blurb": "The OG script that started the modern Windows debloat craze."
+    },
+    {
+      "name": "Winaero Tweaker",
+      "url": "https://winaero.com/winaero-tweaker/",
+      "blurb": "Infinite knobs and dials to bend Windows\u2019 UI and behavior to your will."
+    },
+    {
+      "name": "WPD (Windows Privacy Dashboard)",
+      "url": "https://wpd.app/",
+      "blurb": "Compact dashboard for cutting off Microsoft\u2019s data-snooping tentacles."
+    },
+    {
+      "name": "Dism++",
+      "url": "https://chuyu.me/en/index.html",
+      "blurb": "A GUI front-end for DISM that feels like Windows\u2019 hidden control room."
+    },
+    {
+      "name": "Bulk Crap Uninstaller",
+      "url": "https://www.bcuninstaller.com/",
+      "blurb": "Wipes out stubborn apps in bulk \u2014 no mercy, no leftovers."
+    },
+    {
+      "name": "Revo Uninstaller",
+      "url": "https://www.revouninstaller.com/",
+      "blurb": "Clean uninstalls that dig deeper than Windows ever dreamed."
+    },
+    {
+      "name": "Geek Uninstaller",
+      "url": "https://geekuninstaller.com/",
+      "blurb": "Portable, fast, gets rid of apps in one swipe \u2014 geek approved."
+    },
+    {
+      "name": "NTLite",
+      "url": "https://www.ntlite.com/",
+      "blurb": "Prebuild your dream Windows ISO without the fluff."
+    }
+  ],
+  "/drivers": [
+    {
+      "name": "Intel Driver & Support Assistant",
+      "url": "https://www.intel.com/content/www/us/en/support/intel-driver-support-assistant.html",
+      "blurb": "Intel\u2019s official babysitter \u2014 keep chipsets, iGPUs, and Wi-Fi fresh."
+    },
+    {
+      "name": "NVIDIA GeForce Experience",
+      "url": "https://www.nvidia.com/en-us/geforce/geforce-experience/",
+      "blurb": "One-stop hub for driver updates, ShadowPlay, and settings wizardry."
+    },
+    {
+      "name": "AMD Adrenalin Software",
+      "url": "https://www.amd.com/en/products/software/adrenalin.html",
+      "blurb": "Red-team\u2019s command center for drivers, tweaks, and game boosts."
+    },
+    {
+      "name": "AMD Cleanup Utility",
+      "url": "https://www.amd.com/en/support/kb/faq/gpu-601",
+      "blurb": "Rip out every AMD driver trace before a fresh reinstall."
+    },
+    {
+      "name": "Display Driver Uninstaller (DDU)",
+      "url": "https://www.wagnardsoft.com/",
+      "blurb": "The nuclear option for GPU drivers \u2014 wipe to bare metal."
+    },
+    {
+      "name": "DriverStore Explorer",
+      "url": "https://github.com/lostindark/DriverStoreExplorer",
+      "blurb": "Spring-clean hidden driver clutter in Windows\u2019 vault."
+    },
+    {
+      "name": "Snappy Driver Installer Origin (SDIO)",
+      "url": "https://www.snappy-driver-installer.org/",
+      "blurb": "Offline mega-pack for installing every driver under the sun."
+    },
+    {
+      "name": "Microsoft Update Catalog",
+      "url": "https://www.catalog.update.microsoft.com/",
+      "blurb": "The dusty warehouse of official Microsoft drivers and patches."
+    },
+    {
+      "name": "NVCleanstall",
+      "url": "https://www.techpowerup.com/nvcleanstall/",
+      "blurb": "Install NVIDIA drivers minus the telemetry and junk."
+    },
+    {
+      "name": "Zadig",
+      "url": "https://zadig.akeo.ie/",
+      "blurb": "Essential tool for wrangling USB device drivers."
+    },
+    {
+      "name": "Dell Command | Update",
+      "url": "https://www.dell.com/support/home/en-us/product-support/product/command-update/overview",
+      "blurb": "Dell\u2019s official updater \u2014 keep BIOS, drivers, and firmware synced."
+    },
+    {
+      "name": "Lenovo System Update",
+      "url": "https://support.lenovo.com/us/en/solutions/ht037099",
+      "blurb": "Factory-fresh drivers straight from Lenovo HQ."
+    },
+    {
+      "name": "HP Support Assistant",
+      "url": "https://support.hp.com/us-en/help/hp-support-assistant",
+      "blurb": "HP\u2019s in-house tool for BIOS, drivers, and utilities."
+    }
+  ],
+  "/cpuoc": [
+    {
+      "name": "Intel Extreme Tuning Utility (XTU)",
+      "url": "https://www.intel.com/content/www/us/en/download/17881/intel-extreme-tuning-utility-xtu.html",
+      "blurb": "Intel\u2019s official playground for multipliers, volts, and temps."
+    },
+    {
+      "name": "AMD Ryzen Master",
+      "url": "https://www.amd.com/en/technologies/ryzen-master",
+      "blurb": "Ryzen\u2019s command deck for overclocking, PBO, and memory tuning."
+    },
+    {
+      "name": "ThrottleStop",
+      "url": "https://www.techpowerup.com/download/techpowerup-throttlestop/",
+      "blurb": "Undervolt wizard and turbo tamer, especially on laptops."
+    },
+    {
+      "name": "OCCT",
+      "url": "https://www.ocbase.com/",
+      "blurb": "Comprehensive stability test suite \u2014 stress until it screams."
+    },
+    {
+      "name": "AIDA64",
+      "url": "https://www.aida64.com/downloads",
+      "blurb": "System analyzer that doubles as a brutal stability test."
+    },
+    {
+      "name": "Prime95",
+      "url": "https://www.mersenne.org/download/",
+      "blurb": "Legendary torture test \u2014 discover new max temps in seconds."
+    },
+    {
+      "name": "Cinebench",
+      "url": "https://www.maxon.net/en/cinebench",
+      "blurb": "The standard candle for brag-worthy CPU scores."
+    },
+    {
+      "name": "Linpack Xtreme",
+      "url": "https://www.techpowerup.com/download/linpack-xtreme/",
+      "blurb": "Math-heavy stress test that punishes CPUs mercilessly."
+    },
+    {
+      "name": "y-cruncher",
+      "url": "http://www.numberworld.org/y-cruncher/",
+      "blurb": "Pi calculator turned silicon executioner."
+    },
+    {
+      "name": "HWiNFO64",
+      "url": "https://www.hwinfo.com/download/",
+      "blurb": "Sensor junkie\u2019s dream \u2014 every voltage, every temp, all live."
+    },
+    {
+      "name": "CPU-Z",
+      "url": "https://www.cpuid.com/softwares/cpu-z.html",
+      "blurb": "Quick ID card for your silicon \u2014 and validation bragging rights."
+    },
+    {
+      "name": "Core Temp",
+      "url": "https://www.alcpu.com/CoreTemp/",
+      "blurb": "Lightweight monitor for keeping tabs on your fiery cores."
+    },
+    {
+      "name": "Geekbench",
+      "url": "https://www.geekbench.com/",
+      "blurb": "Cross-platform benchmark for quick score flexing."
+    }
+  ],
+  "/gpuoc": [
+    {
+      "name": "MSI Afterburner",
+      "url": "https://www.msi.com/Landing/afterburner",
+      "blurb": "The OG GPU overclocking toolkit \u2014 sliders and graphs galore."
+    },
+    {
+      "name": "RivaTuner Statistics Server",
+      "url": "https://www.guru3d.com/files-details/rtss-rivatuner-statistics-server-download.html",
+      "blurb": "Paired with Afterburner for silky-smooth overlays and FPS caps."
+    },
+    {
+      "name": "AMD Adrenalin Software",
+      "url": "https://www.amd.com/en/products/software/adrenalin.html",
+      "blurb": "Built-in tuning, undervolt profiles, and streaming tools for Radeons."
+    },
+    {
+      "name": "NVIDIA GeForce Experience",
+      "url": "https://www.nvidia.com/en-us/geforce/geforce-experience/",
+      "blurb": "Driver updates + easy overclock scanning baked in."
+    },
+    {
+      "name": "ASUS GPU Tweak III",
+      "url": "https://www.asus.com/supportonly/gpu%20tweak%20iii/helpdesk_download/",
+      "blurb": "ASUS\u2019 custom tuning app with multiple OC profiles."
+    },
+    {
+      "name": "EVGA Precision X1",
+      "url": "https://www.evga.com/precisionx1/",
+      "blurb": "EVGA\u2019s GPU tuning suite with OC Scanner and RGB sync."
+    },
+    {
+      "name": "GPU-Z",
+      "url": "https://www.techpowerup.com/gpuz/",
+      "blurb": "Lightweight GPU detective \u2014 every spec and sensor at a glance."
+    },
+    {
+      "name": "3DMark",
+      "url": "https://benchmarks.ul.com/3dmark",
+      "blurb": "Gold-standard GPU benchmark with dozens of scenes to flex on."
+    },
+    {
+      "name": "Unigine Superposition",
+      "url": "https://benchmark.unigine.com/superposition",
+      "blurb": "Cinematic GPU stress test with eye-candy galore."
+    },
+    {
+      "name": "FurMark 2",
+      "url": "https://www.geeks3d.com/furmark/",
+      "blurb": "The donut of death \u2014 melts GPUs if they\u2019re weak."
+    },
+    {
+      "name": "CapFrameX",
+      "url": "https://www.capframex.com/",
+      "blurb": "Frame time analysis like a pro reviewer\u2019s toolkit."
+    },
+    {
+      "name": "NVIDIA Profile Inspector",
+      "url": "https://github.com/Orbmu2k/nvidiaProfileInspector",
+      "blurb": "Unlock hidden driver settings for hardcore tinkerers."
+    },
+    {
+      "name": "Intel Arc Control",
+      "url": "https://www.intel.com/content/www/us/en/products/docs/discrete-gpus/arc/software/drivers.html",
+      "blurb": "Intel\u2019s official suite for Arc GPUs \u2014 drivers, tuning, and monitoring."
+    }
+  ],
+  "/fancontrol": [
+    {
+      "name": "FanControl (Rem0o)",
+      "url": "https://github.com/Rem0o/FanControl.Releases",
+      "blurb": "Community darling \u2014 make custom fan curves for everything."
+    },
+    {
+      "name": "Argus Monitor",
+      "url": "https://www.argusmonitor.com/",
+      "blurb": "Paid but powerful \u2014 complete fan/thermal orchestration."
+    },
+    {
+      "name": "HWiNFO64",
+      "url": "https://www.hwinfo.com/",
+      "blurb": "Data feed powerhouse that pairs with external fan apps."
+    },
+    {
+      "name": "Open Hardware Monitor",
+      "url": "https://openhardwaremonitor.org/",
+      "blurb": "Classic open-source hardware sensor suite."
+    },
+    {
+      "name": "SpeedFan (legacy)",
+      "url": "https://www.almico.com/speedfan.php",
+      "blurb": "Old-school fan control still kicking on older boards."
+    },
+    {
+      "name": "ASUS Fan Xpert",
+      "url": "https://www.asus.com/us/support/faq/1041654/",
+      "blurb": "Bundled in Armoury Crate \u2014 fine-tune ASUS fans with ease."
+    },
+    {
+      "name": "MSI Center",
+      "url": "https://www.msi.com/Landing/msi-center",
+      "blurb": "MSI\u2019s hub with fan profiles and monitoring built in."
+    },
+    {
+      "name": "Gigabyte SIV",
+      "url": "https://www.gigabyte.com/Motherboard/Utility/System-Information-Viewer",
+      "blurb": "Gigabyte\u2019s app for fan tuning and monitoring."
+    },
+    {
+      "name": "ASRock A-Tuning",
+      "url": "https://www.asrock.com/feature/A-Tuning/",
+      "blurb": "ASRock\u2019s suite for OC + fan profiles in one."
+    },
+    {
+      "name": "NZXT CAM",
+      "url": "https://nzxt.com/software/cam",
+      "blurb": "Fan, pump, and RGB control in a pretty wrapper."
+    },
+    {
+      "name": "Corsair iCUE",
+      "url": "https://www.corsair.com/icue",
+      "blurb": "Manage Corsair fans, pumps, and RGB from one dashboard."
+    },
+    {
+      "name": "NoteBook FanControl (NBFC)",
+      "url": "https://github.com/hirschmann/nbfc",
+      "blurb": "Laptop-focused open-source fan controller."
+    },
+    {
+      "name": "TPFanControl",
+      "url": "https://sourceforge.net/projects/tp4xfancontrol/",
+      "blurb": "Legendary ThinkPad fan tuner."
+    }
+  ],
+  "/rgb": [
+    {
+      "name": "OpenRGB",
+      "url": "https://openrgb.org/",
+      "blurb": "One app to rule all brands \u2014 kill the bloat, keep the glow."
+    },
+    {
+      "name": "SignalRGB",
+      "url": "https://signalrgb.com/",
+      "blurb": "Cross-brand RGB sync with cool effects out of the box."
+    },
+    {
+      "name": "Razer Synapse",
+      "url": "https://www.razer.com/synapse-4",
+      "blurb": "Green-team\u2019s RGB and macro mothership."
+    },
+    {
+      "name": "Corsair iCUE",
+      "url": "https://www.corsair.com/icue",
+      "blurb": "Corsair\u2019s flashy hub for lights, fans, and macros."
+    },
+    {
+      "name": "ASUS Armoury Crate",
+      "url": "https://www.asus.com/supportonly/armoury%20crate/helpdesk_download/",
+      "blurb": "Aura Sync central \u2014 all things ASUS RGB."
+    },
+    {
+      "name": "MSI Mystic Light",
+      "url": "https://www.msi.com/Landing/mystic-light-rgb-gaming-pc/download",
+      "blurb": "MSI\u2019s lightshow toolkit, bundled with MSI Center."
+    },
+    {
+      "name": "Gigabyte RGB Fusion",
+      "url": "https://www.gigabyte.com/MicroSite/512/rgb2.html",
+      "blurb": "Gigabyte\u2019s RGB suite with board/device integration."
+    },
+    {
+      "name": "ASRock Polychrome RGB",
+      "url": "https://www.asrock.com/microsite/polychromergb/",
+      "blurb": "ASRock\u2019s official tool for RGB control."
+    },
+    {
+      "name": "Logitech G HUB",
+      "url": "https://www.logitechg.com/en-us/innovation/g-hub.html",
+      "blurb": "Logitech\u2019s portal for lighting, DPI, and macros."
+    },
+    {
+      "name": "SteelSeries GG (Engine)",
+      "url": "https://steelseries.com/gg",
+      "blurb": "SteelSeries peripherals lit up in sync."
+    },
+    {
+      "name": "HyperX NGENUITY",
+      "url": "https://hyperx.com/pages/ngenuity",
+      "blurb": "RGB and macro control for HyperX gear."
+    },
+    {
+      "name": "Cooler Master MasterPlus+",
+      "url": "https://www.coolermaster.com/en-us/masterplus/",
+      "blurb": "Cooler Master lighting hub with device sync."
+    },
+    {
+      "name": "Philips Hue Sync",
+      "url": "https://www.philips-hue.com/en-us/explore-hue/propositions/entertainment/sync-with-pc",
+      "blurb": "Bridge your PC and smart lights for full-room immersion."
+    }
+  ],
+  "/power": [
+    {
+      "name": "Process Lasso",
+      "url": "https://bitsum.com/",
+      "blurb": "Tame runaway apps, balance cores, and squeeze extra snappiness."
+    },
+    {
+      "name": "ParkControl",
+      "url": "https://bitsum.com/parkcontrol/",
+      "blurb": "Toggle core parking and turbo policies without command-line headaches."
+    },
+    {
+      "name": "ThrottleStop",
+      "url": "https://www.techpowerup.com/download/techpowerup-throttlestop/",
+      "blurb": "Undervolt, disable turbo, or set power limits \u2014 fine-grain control for Intel CPUs."
+    },
+    {
+      "name": "Intel XTU",
+      "url": "https://www.intel.com/content/www/us/en/download/17881/intel-extreme-tuning-utility-xtu.html",
+      "blurb": "Intel\u2019s one-stop shop for performance tuning and power tweaks."
+    },
+    {
+      "name": "AMD Adrenalin Performance Tuning",
+      "url": "https://www.amd.com/en/resources/support-articles/faqs/DH3-020.html",
+      "blurb": "Adjust GPU power targets, undervolts, and more inside Adrenalin."
+    },
+    {
+      "name": "NVIDIA Control Panel",
+      "url": "https://nvidia.custhelp.com/app/answers/detail/a_id/3130/~/setting-power-management-mode-from-normal-to-maximum-performance",
+      "blurb": "Flip power modes for max performance or max efficiency."
+    },
+    {
+      "name": "powercfg (CLI)",
+      "url": "https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/powercfg-command-line-options",
+      "blurb": "Windows\u2019 hidden power Swiss-army knife."
+    },
+    {
+      "name": "LatencyMon",
+      "url": "https://www.resplendence.com/latencymon",
+      "blurb": "Check if your system\u2019s ready for real-time, glitch-free performance."
+    },
+    {
+      "name": "ISLC (Intelligent Standby List Cleaner)",
+      "url": "https://www.wagnardsoft.com/content/Download-Intelligent-standby-list-cleaner-ISLC-1034",
+      "blurb": "Clear RAM standby lists to fix stutters and hitches."
+    },
+    {
+      "name": "QuickCPU",
+      "url": "https://coderbag.com/product/quickcpu",
+      "blurb": "Adjust power plans and CPU features in a slick GUI."
+    },
+    {
+      "name": "BatteryInfoView",
+      "url": "https://www.nirsoft.net/utils/battery_information_view.html",
+      "blurb": "Laptop battery health and stats, NirSoft-style."
+    },
+    {
+      "name": "BatteryHistoryView",
+      "url": "https://www.nirsoft.net/utils/battery_history_view.html",
+      "blurb": "Graph historical battery usage and charge cycles like a detective."
+    }
+  ]
+}
