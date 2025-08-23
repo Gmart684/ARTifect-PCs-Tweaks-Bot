@@ -1,0 +1,30 @@
+[
+  {
+    "name": "debloat",
+    "description": "List debloating tools & scripts for Windows 10/11"
+  },
+  {
+    "name": "drivers",
+    "description": "Find driver managers, uninstallers, and cleanup tools"
+  },
+  {
+    "name": "cpuoc",
+    "description": "CPU overclocking, undervolting, and stress-test utilities"
+  },
+  {
+    "name": "gpuoc",
+    "description": "GPU overclocking, benchmarking, and tuning utilities"
+  },
+  {
+    "name": "fancontrol",
+    "description": "Fan curve, temperature, and system cooling utilities"
+  },
+  {
+    "name": "rgb",
+    "description": "RGB lighting control apps for every brand (and open source!)"
+  },
+  {
+    "name": "power",
+    "description": "Power management, efficiency, and battery tools"
+  }
+]
