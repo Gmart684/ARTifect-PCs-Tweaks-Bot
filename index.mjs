@@ -68,10 +68,9 @@ These utilities are **NOT** built by ARTiFECT PCs. They can tweak registry, driv
 
 const CHANNEL_TOPIC = `⚡ ARTiFECT Tweaks Bot — /debloat /drivers /cpuoc /gpuoc /fancontrol /rgb /power → spawns a private tool thread. ⚠️ Use at your own risk — see pinned posts.`;
 
-// Per-thread disclaimer
 const THREAD_WARNING =
   "**⚠️⚡ HIGH-TECH DISCLAIMER ⚡⚠️**\n" +
-  "These utilities are *NOT* built by ARTiFect PCs. Use at your own risk!\n" +
+  "These utilities are *NOT* built by ARTifect PCs. Use at your own risk!\n" +
   "If deep Windows tweaks aren’t your thing, consider a **PC Optimizer**: [FPSHUB.org](https://fpshub.org).";
 
 // Simple embed factory
@@ -106,10 +105,7 @@ async function ensurePinnedWithMarker(channel, content, marker) {
   const pins = await channel.messages.fetchPins().catch(() => null);
   if (pins) {
     for (const msg of pins.values()) {
-      if (msg?.content?.includes(marker)) {
-        // already pinned, done
-        return false; // not newly posted
-      }
+      if (msg?.content?.includes(marker)) return false; // already pinned
     }
   }
   // Check recent messages (in case posted but unpinned)
@@ -130,10 +126,9 @@ async function ensurePinnedWithMarker(channel, content, marker) {
   return true; // newly posted
 }
 
-// ===== Startup =====
-client.once('clientReady', async () => {
+// ===== Unified startup =====
+async function startup() {
   console.log(`✅ Logged in as ${client.user.tag}`);
-
   await registerSlashCommands();
 
   try {
@@ -143,11 +138,9 @@ client.once('clientReady', async () => {
       return;
     }
 
-    // Ensure BOTH pinned posts exist (Command Deck + Instructions/Warning)
     await ensurePinnedWithMarker(channel, COMMAND_DECK, COMMAND_DECK_MARKER);
     await ensurePinnedWithMarker(channel, INSTRUCTIONS_AND_WARNING, INSTRUCTIONS_MARKER);
 
-    // Optionally set a concise channel topic/description
     if (SET_CHANNEL_TOPIC && 'setTopic' in channel) {
       try {
         await channel.setTopic(CHANNEL_TOPIC);
@@ -159,7 +152,11 @@ client.once('clientReady', async () => {
   } catch (e) {
     console.error('Startup pinning error:', e);
   }
-});
+}
+
+// Support both v14 and v15 event names:
+client.once('ready', startup);
+client.once('clientReady', startup);
 
 // ===== Command Handler =====
 client.on('interactionCreate', async (interaction) => {
@@ -168,7 +165,7 @@ client.on('interactionCreate', async (interaction) => {
   const cmd = `/${interaction.commandName}`;
   if (!data[cmd]) return;
 
-  // Defer immediately (ephemeral using flags)
+  // Defer immediately (ephemeral via flags)
   try {
     await interaction.deferReply({ flags: 64 }); // 64 = EPHEMERAL
   } catch (_) {}
