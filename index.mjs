@@ -9,52 +9,72 @@ import {
   Routes
 } from 'discord.js';
 
-// ---- Config & Data ----
+// ===== Env / Config =====
 const TOKEN = process.env.DISCORD_TOKEN;
 const APP_ID = process.env.DISCORD_APP_ID;
-const GUILD_ID = process.env.GUILD_ID;     // optional (instant registration if set)
-const CHANNEL_ID = process.env.CHANNEL_ID; // required text channel id
+const GUILD_ID = process.env.GUILD_ID;             // optional (instant registration if set)
+const CHANNEL_ID = process.env.CHANNEL_ID;         // required text channel id
+const SET_CHANNEL_TOPIC = process.env.SET_CHANNEL_TOPIC === '1' || process.env.SET_CHANNEL_TOPIC === 'true';
 
 if (!TOKEN || !APP_ID || !CHANNEL_ID) {
   console.error('Missing required env vars: DISCORD_TOKEN, DISCORD_APP_ID, CHANNEL_ID');
   process.exit(1);
 }
 
+// ===== Data =====
 const data = JSON.parse(fs.readFileSync('./data.json', 'utf-8'));
 
-// ---- Client ----
+// ===== Client =====
 const client = new Client({
   intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages]
 });
 
-// ---- Safety: don't crash on unhandled promise rejections ----
-process.on('unhandledRejection', (reason) => {
-  console.error('UnhandledRejection:', reason);
-});
-process.on('uncaughtException', (err) => {
-  console.error('UncaughtException:', err);
-});
+// Safety: log instead of crash
+process.on('unhandledRejection', (reason) => console.error('UnhandledRejection:', reason));
+process.on('uncaughtException', (err) => console.error('UncaughtException:', err));
 
-// ---- Constants ----
-const REFERENCE_MARKER = 'ARTIFECT_UTILS_BOT_COMMAND_REFERENCE_v1';
-const COMMAND_REFERENCE = `**📌 ARTiFECT Utilities Command Deck**
-${REFERENCE_MARKER}
+// ===== Text Blocks & Markers =====
+const COMMAND_DECK_MARKER = 'ARTIFECT_UTILS_BOT_COMMAND_DECK_v1';
+const INSTRUCTIONS_MARKER = 'ARTIFECT_UTILS_BOT_INSTRUCTIONS_v1';
 
-**/debloat** — Strip the fluff, tighten privacy, and streamline Windows.
-**/drivers** — Keep silicon happy: drivers, clean installs, zero leftovers.
-**/cpuoc** — Multipliers, volts, and stability. Squeeze that silicon.
-**/gpuoc** — Core clocks, fan curves, and frame-time truth.
-**/fancontrol** — Curves that keep cool under fire.
-**/rgb** — Open-source glow or vendor sync — your call.
-**/power** — Efficiency vs beast mode. You choose.
+const COMMAND_DECK = `# ⚡ ARTiFECT Utilities Command Deck
+${COMMAND_DECK_MARKER}
 
-**⚠️ Heads-up:** You’re playing with powerful tools. If deep system tweaks aren’t your jam, book a pro at **FPSHUB.org**.`;
+**/debloat** — Strip the fluff, tighten privacy, and streamline Windows.  
+**/drivers** — Keep silicon happy: clean installs, zero leftovers.  
+**/cpuoc** — Multipliers, volts, and stability. Squeeze that silicon.  
+**/gpuoc** — Core clocks, fan curves, and frame-time truth.  
+**/fancontrol** — Curves that keep cool under fire.  
+**/rgb** — Open-source glow or vendor sync — your call.  
+**/power** — Efficiency vs beast mode. You choose.  
 
-const WARNING =
+> Run a command anywhere and I’ll spawn your 🔒 private thread in this channel with links + blurbs.`;
+
+const INSTRUCTIONS_AND_WARNING = `# 🧭 How to Use & ⚠️ High-Tech Disclaimer
+${INSTRUCTIONS_MARKER}
+
+Welcome to your **high-tech toolbox**. Each command creates a **private thread** for you with curated utilities and one-liners.
+
+**How to use**
+1. Type one of the commands (see Command Deck above).  
+2. I’ll open a **private thread** here, add you, and pin a disclaimer.  
+3. Browse the embeds and click through. No fluff, just tools.
+
+**⚠️ HIGH-TECH DISCLAIMER**
+These utilities are **NOT** built by ARTiFECT PCs. They can tweak registry, drivers, voltage, power, and privacy.  
+**Use at your own risk.** If deep system tweaks aren’t your jam, book a pro at **[FPSHUB.org](https://fpshub.org)**.
+
+**TL;DR:** You get the power — you also own the fallout.`;
+
+const CHANNEL_TOPIC = `⚡ ARTiFECT Tweaks Bot — /debloat /drivers /cpuoc /gpuoc /fancontrol /rgb /power → spawns a private tool thread. ⚠️ Use at your own risk — see pinned posts.`;
+
+// Per-thread disclaimer
+const THREAD_WARNING =
   "**⚠️⚡ HIGH-TECH DISCLAIMER ⚡⚠️**\n" +
-  "These utilities are *NOT* built by ARTifect PCs. Use at your own risk!\n" +
-  "If diving into Windows’ guts scares you, maybe book a session with a **PC Optimizer** like [FPSHUB.org](https://fpshub.org).";
+  "These utilities are *NOT* built by ARTiFect PCs. Use at your own risk!\n" +
+  "If deep Windows tweaks aren’t your thing, consider a **PC Optimizer**: [FPSHUB.org](https://fpshub.org).";
 
+// Simple embed factory
 function makeEmbed(item) {
   return new EmbedBuilder()
     .setTitle(item.name)
@@ -63,7 +83,7 @@ function makeEmbed(item) {
     .setColor(0x00ffff);
 }
 
-// ---- Auto-register commands ----
+// ===== Register Slash Commands on Boot =====
 async function registerSlashCommands() {
   try {
     const commands = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'commands.json'), 'utf-8'));
@@ -80,51 +100,68 @@ async function registerSlashCommands() {
   }
 }
 
-// ---- Ensure pinned Command Deck exists (idempotent) ----
-async function ensurePinnedDeck(channel) {
-  // 1) Check current pins
+// ===== Ensure a message with marker exists & pinned (idempotent) =====
+async function ensurePinnedWithMarker(channel, content, marker) {
+  // Check current pins
   const pins = await channel.messages.fetchPins().catch(() => null);
   if (pins) {
     for (const msg of pins.values()) {
-      if (msg?.content?.includes(REFERENCE_MARKER)) {
-        console.log('📌 Command reference already pinned; skipping.');
-        return;
+      if (msg?.content?.includes(marker)) {
+        // already pinned, done
+        return false; // not newly posted
       }
     }
   }
-  // 2) Scan recent messages (in case it exists but isn’t pinned)
+  // Check recent messages (in case posted but unpinned)
   const recent = await channel.messages.fetch({ limit: 50 }).catch(() => null);
   if (recent) {
     for (const msg of recent.values()) {
-      if (msg?.content?.includes(REFERENCE_MARKER)) {
+      if (msg?.content?.includes(marker)) {
         await msg.pin().catch(() => {});
-        console.log('📌 Found existing command reference; pinned it.');
-        return;
+        console.log(`📌 Found existing marker (${marker}); pinned it.`);
+        return false;
       }
     }
   }
-  // 3) Post new and pin
-  const posted = await channel.send(COMMAND_REFERENCE);
-  await posted.pin();
-  console.log('📌 Posted and pinned command reference.');
+  // Post fresh and pin
+  const posted = await channel.send(content);
+  await posted.pin().catch(() => {});
+  console.log(`📌 Posted and pinned marker (${marker}).`);
+  return true; // newly posted
 }
 
-// ---- Events ----
+// ===== Startup =====
 client.once('clientReady', async () => {
   console.log(`✅ Logged in as ${client.user.tag}`);
+
   await registerSlashCommands();
+
   try {
     const channel = await client.channels.fetch(CHANNEL_ID);
     if (!channel?.isTextBased()) {
       console.error('Configured CHANNEL_ID is not a text-based channel.');
       return;
     }
-    await ensurePinnedDeck(channel);
+
+    // Ensure BOTH pinned posts exist (Command Deck + Instructions/Warning)
+    await ensurePinnedWithMarker(channel, COMMAND_DECK, COMMAND_DECK_MARKER);
+    await ensurePinnedWithMarker(channel, INSTRUCTIONS_AND_WARNING, INSTRUCTIONS_MARKER);
+
+    // Optionally set a concise channel topic/description
+    if (SET_CHANNEL_TOPIC && 'setTopic' in channel) {
+      try {
+        await channel.setTopic(CHANNEL_TOPIC);
+        console.log('📝 Channel topic set.');
+      } catch (e) {
+        console.warn('Could not set channel topic (missing permission or not a text channel).');
+      }
+    }
   } catch (e) {
-    console.error('Error ensuring pinned reference:', e);
+    console.error('Startup pinning error:', e);
   }
 });
 
+// ===== Command Handler =====
 client.on('interactionCreate', async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
 
@@ -152,7 +189,7 @@ client.on('interactionCreate', async (interaction) => {
       reason: `Thread for ${interaction.user.tag} - ${interaction.commandName}`
     });
 
-    // add the command user to the thread
+    // Add the command user to the private thread
     try {
       await thread.members.add(interaction.user.id);
     } catch (addErr) {
@@ -160,11 +197,11 @@ client.on('interactionCreate', async (interaction) => {
       // proceed; they can be added manually if perms block it
     }
 
-    // Pin the disclaimer
-    const warningMsg = await thread.send(WARNING);
-    await warningMsg.pin().catch(() => {});
+    // Pin the disclaimer in the thread
+    const warn = await thread.send(THREAD_WARNING);
+    await warn.pin().catch(() => {});
 
-    // Post each item as an embed
+    // Post the tool embeds
     for (const item of data[cmd]) {
       await thread.send({ embeds: [makeEmbed(item)] });
     }
@@ -180,4 +217,5 @@ client.on('interactionCreate', async (interaction) => {
   }
 });
 
+// ===== Go! =====
 client.login(TOKEN);
