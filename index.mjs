@@ -37,7 +37,7 @@ process.on('uncaughtException', (err) => console.error('UncaughtException:', err
 const COMMAND_DECK_MARKER = 'ARTIFECT_UTILS_BOT_COMMAND_DECK_v1';
 const INSTRUCTIONS_MARKER = 'ARTIFECT_UTILS_BOT_INSTRUCTIONS_v1';
 
-const COMMAND_DECK = `# ⚡ ARTiFECT Utilities Command Deck
+const COMMAND_DECK = `# ⚡ ARTifect Utilities Command Deck
 ${COMMAND_DECK_MARKER}
 
 **/debloat** — Strip the fluff, tighten privacy, and streamline Windows.  
@@ -61,12 +61,12 @@ Welcome to your **high-tech toolbox**. Each command creates a **private thread**
 3. Browse the embeds and click through. No fluff, just tools.
 
 **⚠️ HIGH-TECH DISCLAIMER**
-These utilities are **NOT** built by ARTiFECT PCs. They can tweak registry, drivers, voltage, power, and privacy.  
+These utilities are **NOT** built by ARTifect PCs. They can tweak registry, drivers, voltage, power, and privacy.  
 **Use at your own risk.** If deep system tweaks aren’t your jam, book a pro at **[FPSHUB.org](https://fpshub.org)**.
 
 **TL;DR:** You get the power — you also own the fallout.`;
 
-const CHANNEL_TOPIC = `⚡ ARTiFECT Tweaks Bot — /debloat /drivers /cpuoc /gpuoc /fancontrol /rgb /power → spawns a private tool thread. ⚠️ Use at your own risk — see pinned posts.`;
+const CHANNEL_TOPIC = `⚡ ARTifect Tweaks Bot — /debloat /drivers /cpuoc /gpuoc /fancontrol /rgb /power → spawns a private tool thread. ⚠️ Use at your own risk — see pinned posts.`;
 
 const THREAD_WARNING =
   "**⚠️⚡ HIGH-TECH DISCLAIMER ⚡⚠️**\n" +
